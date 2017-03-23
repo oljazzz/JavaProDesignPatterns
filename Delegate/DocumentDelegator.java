@@ -7,7 +7,19 @@ import AbstractProducts.Document;
  */
 public class DocumentDelegator {
     private Document document;
+    /*Singleton*/
+    private static DocumentDelegator instance;
 
+    public static synchronized DocumentDelegator getInstance() {
+        if (instance == null) {
+            instance = new DocumentDelegator();
+        }
+        return instance;
+    }
+
+    private DocumentDelegator() {
+
+    }
 
     public void setDocument(Document document) {
         this.document = document;

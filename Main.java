@@ -4,6 +4,8 @@ import Delegate.DocumentDelegator;
 import Delegate.RequestDelegator;
 import Enums.DocumentType;
 import Enums.RequestType;
+import RequestContext.RequestContext;
+import State.RequestInit;
 import Utils.DocumentSelector;
 
 /**
@@ -17,12 +19,12 @@ public class Main {
         /*Document selector is creates factories*/
         DocumentSelector selector = new DocumentSelector();
         /*Getting Office Doc Factory*/
-        DocumentMaker documentMaker = selector.getDocumentMaker(DocumentType.OFFICE_DOC);
+        DocumentMaker documentMaker = selector.getDocumentMaker(DocumentType.PROCURATION);
         /*Getting Personel Request Factory*/
         RequestMaker requestMaker = selector.getRequestMaker(RequestType.PERSONEL_REQUEST);
 
         /*Delegating create and save methods*/
-        DocumentDelegator delegator = new DocumentDelegator();
+        DocumentDelegator delegator = DocumentDelegator.getInstance();
         delegator.setDocument(documentMaker.createDocument());
         delegator.create();
         delegator.save();
@@ -33,7 +35,9 @@ public class Main {
         requestDelegator.create();
         requestDelegator.approve();
         requestDelegator.close();
-
+        RequestContext context = new RequestContext();
+        context.setState(new RequestInit());
+        context.initialize();
 
     }
 }
